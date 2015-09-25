@@ -76,13 +76,16 @@ Vagrant.configure(2) do |config|
   end
 
   # Installing and configuring LEMP stack
-  config.vm.provision :shell, path: "vagrant_provision_lemp.sh", args: [app, docroot]
+  config.vm.provision :shell, path: "vagrant/0_lemp.sh", args: [app, docroot]
 
   # Configuring the LEMP stack
-  config.vm.provision :shell, path: "vagrant_provision_magento.sh", args: [app, docroot]
-  config.vm.provision :shell, path: "vagrant_provision_symfony.sh", args: [app, docroot]
-  config.vm.provision :shell, path: "vagrant_provision_typo3.sh", args: [app, docroot]
-  config.vm.provision :shell, path: "vagrant_provision_wordpress.sh", args: [app, docroot]
+  config.vm.provision :shell, path: "vagrant/10_magento.sh", args: [app, docroot]
+  config.vm.provision :shell, path: "vagrant/20_symfony.sh", args: [app, docroot]
+  config.vm.provision :shell, path: "vagrant/30_typo3.sh", args: [app, docroot]
+  config.vm.provision :shell, path: "vagrant/40_wordpress.sh", args: [app, docroot]
+
+  # Custom tasks
+  config.vm.provision :shell, path: "vagrant/100_tasks.sh", args: [app, docroot]
 
   # Restart relevant services on each boot up
   config.vm.provision "shell", inline: "service nginx restart", run: "always"
