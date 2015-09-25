@@ -43,6 +43,10 @@ php_admin_value[date.timezone] = Europe/Berlin
 EOF
 service php5-fpm restart
 
+echo "Installing Composer ..."
+curl -sS https://getcomposer.org/installer | php
+mv composer.phar /usr/local/bin/composer
+
 echo "Installing nginx webserver ..."
 apt-get install -y nginx nginx-extras
 
