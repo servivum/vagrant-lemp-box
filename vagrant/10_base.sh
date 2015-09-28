@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Variables from Vagrantfile
+APP=$1
+DOCROOT=$2
+
 echo "Enabling nointeractive mode for Debian ..."
 export DEBIAN_FRONTEND=noninteractive
 
