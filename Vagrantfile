@@ -5,6 +5,8 @@
 # TYPO3 (6.2): "typo3"
 # WordPress (4.3): "wordpress"
 app = "blank"
+
+# Define subfolder within your project for using as webserver root. Show manual of your application for more details.
 docroot = "public"
 
 Vagrant.configure(2) do |config|
@@ -75,17 +77,23 @@ Vagrant.configure(2) do |config|
       s.inline = "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile"
   end
 
-  # Installing and configuring LEMP stack
-  config.vm.provision :shell, path: "vagrant/0_lemp.sh", args: [app, docroot]
+  # Installing and configuring LEMP stack and utilities
+  config.vm.provision :shell, path: "vagrant/10_base.sh", args: [app, docroot]
 
-  # Configuring the LEMP stack
-  config.vm.provision :shell, path: "vagrant/10_magento.sh", args: [app, docroot]
+  # Configuring the LEMP stack for selected application
+  config.vm.provision :shell, path: "vagrant/20_magento.sh", args: [app, docroot]
   config.vm.provision :shell, path: "vagrant/20_symfony.sh", args: [app, docroot]
-  config.vm.provision :shell, path: "vagrant/30_typo3.sh", args: [app, docroot]
-  config.vm.provision :shell, path: "vagrant/40_wordpress.sh", args: [app, docroot]
+  config.vm.provision :shell, path: "vagrant/20_typo3.sh", args: [app, docroot]
+  config.vm.provision :shell, path: "vagrant/20_wordpress.sh", args: [app, docroot]
 
-  # Custom tasks
-  config.vm.provision :shell, path: "vagrant/100_tasks.sh", args: [app, docroot]
+  # Custom tasks from inline Shell commands
+  config.vm.provision "shell", inline: <<-SHELL
+      # Put your Shell commands here ...
+      echo "Running inline custom tasks ..."
+  SHELL
+
+  # Custom tasks from external file. Recommended for many commands.
+  config.vm.provision :shell, path: "vagrant/30_custom.sh", args: [app, docroot]
 
   # Restart relevant services on each boot up
   config.vm.provision "shell", inline: "service nginx restart", run: "always"

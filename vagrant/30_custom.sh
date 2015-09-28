@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-echo "Running custom tasks ..."
+echo "Running external custom tasks ..."
 
 # Write your own tasks below
