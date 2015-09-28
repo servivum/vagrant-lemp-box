@@ -94,9 +94,13 @@ Vagrant.configure(2) do |config|
 
   # Show IP address and hostname
   config.vm.provision "shell", inline: "
+  echo \" \"
   echo \"--- PUT THIS LINE IN YOUR HOST FILE ---\"
+  echo \" \"
   echo `/sbin/ifconfig eth1 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'` `hostname -f`
-  echo \"----------------------------------\"
+  echo \" \"
+  echo \"---------------------------------------\"
+  echo \" \"
   ", run: "always"
 
   # Introduction message
