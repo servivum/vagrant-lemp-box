@@ -19,6 +19,9 @@ apt-get install -y graphicsmagick-imagemagick-compat ghostscript
 echo "Installing PHP with essential extensions ..."
 apt-get install -y php5-fpm php5-cli php5-curl php5-gd php5-mcrypt php5-mysql php5-gmp php5-ldap php5-pspell php5-recode php5-xsl php5-tidy php5-sqlite php5-imagick php-pear
 
+echo "Installing additional PHP extensions ..."
+apt-get install -y php-apc
+
 echo "Creating pool configuration"
 cat > /etc/php5/fpm/pool.d/vagrant.conf <<EOF
 [vagrant]
@@ -44,6 +47,9 @@ env[TEMP] = /tmp
 php_admin_value[open_basedir] = /var/www/:/tmp/
 php_admin_value[date.timezone] = Europe/Berlin
 
+# Performance Tweaks
+php_admin_value[realpath_cache_size] = 4096k
+php_admin_value[realpath_cache_ttl] = 7200
 EOF
 service php5-fpm restart
 
@@ -87,7 +93,6 @@ server {
 		include fastcgi_params;
 	}
 }
-
 EOF
 
 if ! [ -L /etc/nginx/sites-enabled/vagrant ]; then
@@ -120,7 +125,6 @@ password=$MYSQL_ROOT_PASS
 [mysqldump]
 user=root
 password=$MYSQL_ROOT_PASS
-
 EOF
 chmod 700 /root/.my.cnf
 
@@ -144,7 +148,6 @@ password=$MYSQL_VAGRANT_PASS
 [mysqldump]
 user=$MYSQL_VAGRANT_USER
 password=$MYSQL_VAGRANT_PASS
-
 EOF
 
 APP=$1

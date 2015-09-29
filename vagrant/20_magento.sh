@@ -19,15 +19,56 @@ server {
 	index index.php;
 	try_files \$uri \$uri/ index.php\$is_args\$args;
 
-	location ~ .php$ {
-		fastcgi_pass unix:/tmp/php5-fpm.sock;
-		fastcgi_index index.php;
-		include fastcgi_params;
-	}
+	#Magento
+    location / {
+    	## Allow a static html file to be shown first
+        index index.html index.php;
 
-	location ~ /\.ht {
-		deny all;
-	}
+        ## If missing pass the URI to Magento's front handler
+        try_files \$uri \$uri/ @handler;
+
+        ## Assume all files are cachable
+        expires 30d;
+    }
+
+    ## These locations would be hidden by .htaccess normally
+    location /app/                { deny all; }
+    location /includes/           { deny all; }
+    location /lib/                { deny all; }
+    location /media/downloadable/ { deny all; }
+    location /pkginfo/            { deny all; }
+    location /report/config.xml   { deny all; }
+    location /var/                { deny all; }
+
+    ## Disable .htaccess and other hidden files
+    location ~ /\. {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+
+	## Magento uses a common front handler
+    location @handler {
+        rewrite / /index.php;
+    }
+
+	## Forward paths like /js/index.php/x.js to relevant handler
+    location ~ \.php/ {
+        rewrite ^(.*\.php)/ \$1 last;
+    }
+
+    location ~ \.php\$ { ## Execute PHP scripts
+    	## Catch 404s that try_files miss
+        if (!-e \$request_filename) { rewrite / /index.php last; }
+
+        expires off;
+        fastcgi_pass unix:/var/run/php5-fpm-vagrant.sock;
+		fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+        fastcgi_param MAGE_RUN_CODE default;
+        fastcgi_param MAGE_RUN_TYPE store;
+    }
 }
 
 EOF

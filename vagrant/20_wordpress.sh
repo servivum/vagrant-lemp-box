@@ -10,7 +10,6 @@ then
 fi
 
 echo "Configuring nginx server block for WordPress ..."
-
 cat > /etc/nginx/sites-available/vagrant <<EOF
 server {
 	listen 80;
@@ -43,11 +42,9 @@ server {
 }
 
 EOF
-
 service nginx reload
 
 echo "Installing WP-CLI ..."
-
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 php wp-cli.phar --info
 chmod +x wp-cli.phar
