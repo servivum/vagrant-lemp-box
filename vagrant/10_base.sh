@@ -27,10 +27,10 @@ cat > /etc/php5/fpm/pool.d/vagrant.conf <<EOF
 [vagrant]
 listen = /var/run/php5-fpm-vagrant.sock
 listen.backlog = 4096
-user = www-data
-group = www-data
-listen.owner = www-data
-listen.group = www-data
+user = vagrant
+group = vagrant
+listen.owner = vagrant
+listen.group = vagrant
 listen.allowed_clients = 127.0.0.1
 listen.mode = 0660
 pm = dynamic
@@ -94,6 +94,9 @@ server {
 	}
 }
 EOF
+
+echo "Allowing www-data to access php socket file of vagrant user ..."
+adduser www-data vagrant
 
 if ! [ -L /etc/nginx/sites-enabled/vagrant ]; then
 	echo "Enabling new nginx server block ..."
