@@ -110,6 +110,9 @@ if ! [ -L /var/www ]; then
 fi
 service nginx reload
 
+echo "Adding command to change folder on 'vagrant ssh'..."
+echo "cd /var/www/" >> /home/vagrant/.bashrc
+
 echo "Installing MariaDB ..."
 echo "Preparing unattended installation of MariaDB ..."
 MYSQL_ROOT_PASS="vagrant"
