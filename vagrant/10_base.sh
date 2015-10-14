@@ -10,6 +10,9 @@ export DEBIAN_FRONTEND=noninteractive
 echo "Updating and upgrading operation system ..."
 apt-get update && apt-get upgrade
 
+echo "Installing all locales ..."
+apt-get install locales-all
+
 echo "Installing essentials ..."
 apt-get install -y git curl rsync mc
 
