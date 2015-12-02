@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 
 APP=$1
+DOCROOT=$2
 if [ "$APP" != "symfony" ]
 then
 	echo "No Symfony configuration selected."
 	exit 0
 fi
+
+echo "Loading Symfony installer ..."
+curl -LsS http://symfony.com/installer -o /usr/local/bin/symfony
+chmod a+x /usr/local/bin/symfony
 
 echo "Configuring nginx server block for Symfony ..."
 cat > /etc/nginx/sites-available/vagrant <<EOF
@@ -58,6 +63,9 @@ server {
 }
 EOF
 service nginx reload
+
+echo "Setting timezone for php-cli to avoid Symfony warnings ..."
+sed -i "s/^;date.timezone =$/date.timezone = \"Europe\/Berlin\"/" /etc/php5/cli/php.ini
 
 # @ TODO: Set environment variable for defining dev mode.
 #cat > /etc/php5/fpm/pool.d/vagrant.conf <<EOF

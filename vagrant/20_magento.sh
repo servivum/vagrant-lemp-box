@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 APP=$1
+DOCROOT=$2
 if [ "$APP" != "magento" ]
 then
 	echo "No Magento configuration selected."

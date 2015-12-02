@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 APP=$1
+DOCROOT=$2
 if [ "$APP" != "typo3" ]
 then
 	echo "No TYPO3 configuration selected."

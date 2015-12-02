@@ -14,13 +14,28 @@ echo "Installing all locales ..."
 apt-get install locales-all
 
 echo "Installing essentials ..."
-apt-get install -y git curl rsync mc
+apt-get install -y curl git mc rsync
 
 echo "Installing graphic libs ..."
-apt-get install -y graphicsmagick-imagemagick-compat ghostscript
+apt-get install -y ghostscript graphicsmagick-imagemagick-compat
 
 echo "Installing PHP with essential extensions ..."
-apt-get install -y php5-fpm php5-cli php5-curl php5-gd php5-mcrypt php5-mysql php5-gmp php5-ldap php5-pspell php5-recode php5-xsl php5-tidy php5-sqlite php5-imagick php-pear
+apt-get install -y php5-cli \
+php5-curl \
+php5-fpm \
+php5-gd \
+php5-gmp \
+php5-imagick \
+php5-intl \
+php5-ldap \
+php5-mcrypt \
+php5-mysql \
+php5-pspell \
+php5-recode \
+php5-sqlite \
+php5-tidy \
+php5-xsl \
+php-pear
 
 echo "Installing additional PHP extensions ..."
 apt-get install -y php-apc
