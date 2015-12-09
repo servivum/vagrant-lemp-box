@@ -62,8 +62,15 @@ env[PATH] = /usr/local/bin:/usr/bin:/bin
 env[TMP] = /tmp
 env[TMPDIR] = /tmp
 env[TEMP] = /tmp
+
 php_admin_value[open_basedir] = /var/www/:/tmp/
 php_admin_value[date.timezone] = Europe/Berlin
+php_flag[display_errors] = on
+php_admin_value[error_log] = /var/log/php-error.log
+php_admin_flag[log_errors] = on
+php_admin_value[upload_max_filesize] = 100M
+php_admin_value[post_max_size] = 100M
+php_admin_value[max_execution_time] = 240
 
 # Performance Tweaks
 php_admin_value[realpath_cache_size] = 4096k

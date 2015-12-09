@@ -40,10 +40,10 @@ server {
 
         location / {
                 # try to serve file directly, fallback to app.php
-                try_files \$uri /app.php\$is_args\$args;
+                try_files \$uri /app_dev.php\$is_args\$args;
         }
 
-        location ~ ^/app\.php(/|\$) {
+        location ~ ^/app_dev\.php(/|\$) {
                 fastcgi_pass unix:/var/run/php5-fpm-vagrant.sock;
 
                 fastcgi_split_path_info ^(.+\.php)(/.*)\$;
