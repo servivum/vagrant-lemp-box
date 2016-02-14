@@ -1,5 +1,6 @@
 # Use one of the following values to use the right LEMP configuration for your app:
 # Blank: "blank"
+# Laravel (5.2): "laravel"
 # Magento (1.9.1): "magento"
 # Symfony (2.8): "symfony"
 # TYPO3 (6.2): "typo3"
@@ -27,6 +28,7 @@ Vagrant.configure(2) do |config|
     config.vm.provision :shell, path: "vagrant/10_base.sh", args: [app, docroot]
 
     # Configuring the LEMP stack for selected application
+    config.vm.provision :shell, path: "vagrant/20_laravel.sh", args: [app, docroot]
     config.vm.provision :shell, path: "vagrant/20_magento.sh", args: [app, docroot]
     config.vm.provision :shell, path: "vagrant/20_symfony.sh", args: [app, docroot]
     config.vm.provision :shell, path: "vagrant/20_typo3.sh", args: [app, docroot]
