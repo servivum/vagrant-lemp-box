@@ -3,7 +3,7 @@
 # Laravel (5.2): "laravel"
 # Magento (1.9.1): "magento"
 # Symfony (2.8): "symfony"
-# TYPO3 (6.2): "typo3"
+# TYPO3 (7.6): "typo3"
 # WordPress (4.3): "wordpress"
 app = "blank"
 
@@ -15,8 +15,12 @@ Vagrant.configure(2) do |config|
     config.vm.box = "debian/jessie64"
     config.vm.network "private_network", ip: "192.168.13.37"
     config.vm.hostname = "servivum.dev"
-    # Slow page load? Use this on OS X.
-    # config.vm.synced_folder ".", "/vagrant", type: "nfs"
+
+    if OS.windows?
+        config.vm.synced_folder ".", "/vagrant", type: "smb"
+    elsif OS.mac?
+        config.vm.synced_folder ".", "/vagrant", type: "nfs"
+    end
 
     # Fix "stdin: is not a tty" message
     config.vm.provision "fix-no-tty", type: "shell" do |s|
@@ -61,4 +65,22 @@ Vagrant.configure(2) do |config|
 
     # Introduction message
     config.vm.post_up_message = "Servivum look-alike environment is up and running! See https://github.com/Servivum/vagrant-box of project for more details."
+end
+
+module OS
+    def OS.windows?
+        (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil
+    end
+
+    def OS.mac?
+        (/darwin/ =~ RUBY_PLATFORM) != nil
+    end
+
+    def OS.unix?
+        !OS.windows?
+    end
+
+    def OS.linux?
+        OS.unix? and not OS.mac?
+    end
 end
