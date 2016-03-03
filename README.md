@@ -8,6 +8,7 @@ Rock-solid Debian based Vagrant box with a straightforward LEMP configuration. N
 - nginx
 - PHP 5.6
 - MariaDB
+- XDebug
 
 ## Requirements
 - VirtualBox
