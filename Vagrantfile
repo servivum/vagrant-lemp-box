@@ -10,9 +10,6 @@ app = "blank"
 # Define subfolder within your project for using as webserver root. Show manual of your application for more details.
 docroot = "public"
 
-# Set to true if you want to install xdebug
-xdebug = "false"
-
 Vagrant.configure(2) do |config|
     # See Vagrant documentation for more information.
     config.vm.box = "debian/jessie64"
@@ -28,7 +25,7 @@ Vagrant.configure(2) do |config|
     end
 
     # Installing and configuring LEMP stack and utilities
-    config.vm.provision :shell, path: "vagrant/10_base.sh", args: [app, docroot, xdebug]
+    config.vm.provision :shell, path: "vagrant/10_base.sh", args: [app, docroot]
 
     # Configuring the LEMP stack for selected application
     config.vm.provision :shell, path: "vagrant/20_laravel.sh", args: [app, docroot]

@@ -3,7 +3,6 @@
 # Variables from Vagrantfile
 APP=$1
 DOCROOT=$2
-XDEBUG=$3
 
 echo "Enabling nointeractive mode for Debian ..."
 export DEBIAN_FRONTEND=noninteractive
@@ -36,12 +35,8 @@ php5-recode \
 php5-sqlite \
 php5-tidy \
 php5-xsl \
-php-pear
-
-if [ $XDEBUG = "true" ]; then
-    echo "Install php5-dev for enable XDebug ..."
-    apt-get install -y php5-dev
-fi
+php-pear \
+php5-dev
 
 echo "Installing additional PHP extensions ..."
 apt-get install -y php-apc
@@ -187,17 +182,16 @@ user=$MYSQL_VAGRANT_USER
 password=$MYSQL_VAGRANT_PASS
 EOF
 
-if [ $XDEBUG = "true" ]; then
-    echo "Install XDebug ..."
-    pecl install xdebug
+echo "Install XDebug ..."
+pecl install xdebug
 
-    xdebug_path=$(find / -name 'xdebug.so' 2> /dev/null)
+xdebug_path=$(find / -name 'xdebug.so' 2> /dev/null)
 
-    echo "Create xdebug.ini in /etc/php5/mods-available ..."
-    echo "with Xdebug installation: "
-    echo $xdebug_path
+echo "Create xdebug.ini in /etc/php5/mods-available ..."
+echo "with Xdebug installation: "
+echo $xdebug_path
 
-    sudo bash -c 'cat << EOF > /etc/php5/mods-available/xdebug.ini
+sudo bash -c 'cat << EOF > /etc/php5/mods-available/xdebug.ini
 [xdebug]
 zend_extension = "'$xdebug_path'"
 xdebug.default_enable = 1
@@ -209,12 +203,11 @@ xdebug.remote_handler = dbgp
 xdebug.remote_connect_back = 1
 EOF'
 
-    echo "Create symlink to /etc/php5/fpm/conf.d ..."
-    ln -s /etc/php5/mods-available/xdebug.ini /etc/php5/fpm/conf.d/20-xdebug.ini
+echo "Create symlink to /etc/php5/fpm/conf.d ..."
+ln -s /etc/php5/mods-available/xdebug.ini /etc/php5/fpm/conf.d/20-xdebug.ini
 
-    echo "Reload nginx"
-    service nginx reload
-fi
+echo "Reload nginx"
+service nginx reload
 
 APP=$1
 echo "Selected App: $APP"
