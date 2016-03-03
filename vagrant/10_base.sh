@@ -71,7 +71,9 @@ php_admin_value[error_log] = /var/log/php-error.log
 php_admin_flag[log_errors] = on
 php_admin_value[upload_max_filesize] = 100M
 php_admin_value[post_max_size] = 100M
+php_admin_value[max_input_vars] = 1500
 php_admin_value[max_execution_time] = 240
+php_admin_value[always_populate_raw_post_data] = -1
 
 # Performance Tweaks
 php_admin_value[realpath_cache_size] = 4096k
