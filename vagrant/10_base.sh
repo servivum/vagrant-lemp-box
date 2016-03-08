@@ -41,6 +41,31 @@ php5-dev
 echo "Installing additional PHP extensions ..."
 apt-get install -y php-apc
 
+# @TODO: Improve the Xdebug integration
+echo "Installing Xdebug ..."
+pecl install xdebug
+
+XDEBUG_PATH=$(find / -name 'xdebug.so' 2> /dev/null)
+
+echo "Creating xdebug.ini in /etc/php5/mods-available ..."
+echo "with Xdebug installation: "
+echo $XDEBUG_PATH
+
+sudo bash -c 'cat << EOF > /etc/php5/mods-available/xdebug.ini
+[xdebug]
+zend_extension = "'$XDEBUG_PATH'"
+xdebug.default_enable = 1
+xdebug.idekey = "vagrant"
+xdebug.remote_enable = 1
+xdebug.remote_autostart = 1
+xdebug.remote_port = 9000
+xdebug.remote_handler = dbgp
+xdebug.remote_connect_back = 1
+EOF'
+
+echo "Creating symlink to /etc/php5/fpm/conf.d ..."
+ln -s /etc/php5/mods-available/xdebug.ini /etc/php5/fpm/conf.d/20-xdebug.ini
+
 echo "Creating pool configuration"
 cat > /etc/php5/fpm/pool.d/vagrant.conf <<EOF
 [vagrant]
@@ -183,30 +208,6 @@ password=$MYSQL_VAGRANT_PASS
 user=$MYSQL_VAGRANT_USER
 password=$MYSQL_VAGRANT_PASS
 EOF
-
-echo "Install XDebug ..."
-pecl install xdebug
-
-xdebug_path=$(find / -name 'xdebug.so' 2> /dev/null)
-
-echo "Create xdebug.ini in /etc/php5/mods-available ..."
-echo "with Xdebug installation: "
-echo $xdebug_path
-
-sudo bash -c 'cat << EOF > /etc/php5/mods-available/xdebug.ini
-[xdebug]
-zend_extension = "'$xdebug_path'"
-xdebug.default_enable = 1
-xdebug.idekey = "vagrant"
-xdebug.remote_enable = 1
-xdebug.remote_autostart = 1
-xdebug.remote_port = 9000
-xdebug.remote_handler = dbgp
-xdebug.remote_connect_back = 1
-EOF'
-
-echo "Create symlink to /etc/php5/fpm/conf.d ..."
-ln -s /etc/php5/mods-available/xdebug.ini /etc/php5/fpm/conf.d/20-xdebug.ini
 
 echo "Reload nginx"
 service nginx reload
