@@ -1,4 +1,4 @@
-![Vagrant Box](https://img.shields.io/badge/Vagrant-Box-brightgreen.svg?style=flat-square) [![License MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+[![License MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
 # Vagrant Box
 Rock-solid Debian based Vagrant box with a straightforward LEMP configuration. No Puppet or Chef knowledge required. 
