@@ -1,5 +1,6 @@
 # Use one of the following LEMP configurations for your app or start from scratch.
 # Scratch: "scratch"
+# Drupal (8):       "drupal"
 # Laravel (5.2):    "laravel"
 # Magento (1.9.1):  "magento"
 # Symfony (2.8):    "symfony"
@@ -32,6 +33,7 @@ Vagrant.configure(2) do |config|
     config.vm.provision :shell, path: "vagrant/10_base.sh", args: [app, docroot]
 
     # Configuring the LEMP stack for selected application
+    config.vm.provision :shell, path: "vagrant/20_drupal.sh", args: [app, docroot]
     config.vm.provision :shell, path: "vagrant/20_laravel.sh", args: [app, docroot]
     config.vm.provision :shell, path: "vagrant/20_magento.sh", args: [app, docroot]
     config.vm.provision :shell, path: "vagrant/20_symfony.sh", args: [app, docroot]
