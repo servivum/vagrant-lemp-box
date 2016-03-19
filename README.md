@@ -1,6 +1,6 @@
-[![License MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+![Vagrant](https://img.shields.io/badge/vagrant-box-brightgreen.svg?style=flat-square) [![License MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
-# Vagrant Box
+# Vagrant LEMP Box
 Rock-solid Debian based Vagrant box with a straightforward LEMP configuration. No Puppet or Chef knowledge required. 
 Easy to extend with basic bash knowledge.
 
@@ -20,6 +20,15 @@ Easy to extend with basic bash knowledge.
 3. Define document root in Vagrantfile
 4. Run "vagrant up"
 5. Create fantastic things!
+
+### Supported Apps
+
+- Drupal
+- Laravel
+- Magento
+- Symfony
+- TYPO3
+- WordPress
 
 ### Database
 You need a database? These box creates one for you:

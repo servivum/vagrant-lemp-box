@@ -9,7 +9,7 @@
 app = "scratch"
 
 # Define subfolder within your project for using as webserver root. Show manual of your application for more details.
-docroot = "public"
+docroot = "src"
 
 Vagrant.configure(2) do |config|
     # See Vagrant documentation for more information.
