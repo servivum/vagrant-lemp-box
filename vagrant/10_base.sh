@@ -110,6 +110,11 @@ echo "Installing Composer ..."
 curl -sS https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
 
+echo "Installing PHPUnit ..."
+wget https://phar.phpunit.de/phpunit.phar
+chmod +x phpunit.phar
+mv phpunit.phar /usr/local/bin/phpunit
+
 echo "Installing nginx webserver ..."
 apt-get install -y nginx nginx-extras
 
