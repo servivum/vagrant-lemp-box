@@ -74,3 +74,15 @@ server {
 
 EOF
 service nginx reload
+
+echo "Installing modman ..."
+bash < <(curl -s -L https://raw.github.com/colinmollenhour/modman/master/modman-installer)
+mv ~/bin/modman /usr/local/bin/
+
+echo "Installing magerun ..."
+wget https://files.magerun.net/n98-magerun.phar
+chmod +x n98-magerun.phar
+mv n98-magerun.phar /usr/local/bin/n98-magerun.phar
+if ! [ -L /usr/local/bin/magerun ]; then
+    ln -s /usr/local/bin/n98-magerun.phar /usr/local/bin/magerun
+fi

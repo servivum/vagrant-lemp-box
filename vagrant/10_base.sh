@@ -41,19 +41,11 @@ php5-dev
 echo "Installing additional PHP extensions ..."
 apt-get install -y php-apc
 
-# @TODO: Improve the Xdebug integration
 echo "Installing Xdebug ..."
-pecl install xdebug
+apt-get -y install php5-xdebug
 
-XDEBUG_PATH=$(find / -name 'xdebug.so' 2> /dev/null)
-
-echo "Creating xdebug.ini in /etc/php5/mods-available ..."
-echo "with Xdebug installation: "
-echo $XDEBUG_PATH
-
-sudo bash -c 'cat << EOF > /etc/php5/mods-available/xdebug.ini
-[xdebug]
-zend_extension = "'$XDEBUG_PATH'"
+cat > /etc/php5/mods-available/xdebug.ini <<EOF
+zend_extension = xdebug.so
 xdebug.default_enable = 1
 xdebug.idekey = "vagrant"
 xdebug.remote_enable = 1
@@ -61,10 +53,7 @@ xdebug.remote_autostart = 1
 xdebug.remote_port = 9000
 xdebug.remote_handler = dbgp
 xdebug.remote_connect_back = 1
-EOF'
-
-echo "Creating symlink to /etc/php5/fpm/conf.d ..."
-ln -s /etc/php5/mods-available/xdebug.ini /etc/php5/fpm/conf.d/20-xdebug.ini
+EOF
 
 echo "Creating pool configuration"
 cat > /etc/php5/fpm/pool.d/vagrant.conf <<EOF
@@ -109,6 +98,11 @@ service php5-fpm restart
 echo "Installing Composer ..."
 curl -sS https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
+
+echo "Installing PHPUnit ..."
+wget https://phar.phpunit.de/phpunit.phar
+chmod +x phpunit.phar
+mv phpunit.phar /usr/local/bin/phpunit
 
 echo "Installing nginx webserver ..."
 apt-get install -y nginx nginx-extras
