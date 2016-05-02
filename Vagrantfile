@@ -18,7 +18,7 @@ Vagrant.configure(2) do |config|
     config.vm.hostname = "servivum.dev"
 
     if OS.windows?
-        config.vm.synced_folder ".", "/vagrant", type: "smb"
+        config.vm.synced_folder ".", "/vagrant", type: "smb", mount_options: ["mfsymlinks,dir_mode=0755,file_mode=0755"]
     elsif OS.mac?
         config.vm.synced_folder ".", "/vagrant", type: "nfs"
     end
