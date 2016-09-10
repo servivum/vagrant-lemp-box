@@ -36,4 +36,4 @@ Host: `localhost`, DB: `vagrant`, User: `vagrant`, Password: `vagrant`
 
 ## Extending
 
-In the file `vagrant/30_custom.sh` is space for your improvements.
+In `vagrant/30_custom.sh` is space for your improvements.
