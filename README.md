@@ -24,7 +24,7 @@ Easy to extend with basic bash knowledge.
 ### Supported Apps
 
 - Drupal
-- Laravel
+- Laravel/Lumen
 - Magento
 - Symfony
 - TYPO3
