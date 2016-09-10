@@ -1,11 +1,11 @@
 # Use one of the following LEMP configurations for your app or start from scratch.
 # Scratch: "scratch"
-# Drupal (8):       "drupal"
-# Laravel (5.2):    "laravel"
-# Magento (1.9.1):  "magento"
-# Symfony (2.8):    "symfony"
-# TYPO3 (7.6):      "typo3"
-# WordPress (4.3):  "wordpress"
+# Drupal (8):          "drupal"
+# Laravel/Lumen (5.2): "laravel"
+# Magento (1.9.1):     "magento"
+# Symfony (2.8):       "symfony"
+# TYPO3 (7.6):         "typo3"
+# WordPress (4.3):     "wordpress"
 app = "scratch"
 
 # Define subfolder within your project for using as webserver root. Show manual of your application for more details.
